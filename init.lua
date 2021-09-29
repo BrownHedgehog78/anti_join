@@ -2,7 +2,7 @@ local storage = minetest.get_mod_storage()
 local anti_join_msg = minetest.settings:get("anti_join.msg") or "This server is locked right now. You can't join, please try again later"
 
 minetest.register_on_prejoinplayer(function(name)
-	if not minetest.check_player_privs(name, {server = true}) and storage:get_string("anti_join") == "enabled" then
+	if not minetest.check_player_privs(name, {ignore_antijoin = true}) and storage:get_string("anti_join") == "enabled" then
 		return anti_join_msg
 	end
 end)
@@ -20,3 +20,5 @@ minetest.register_chatcommand("anti_join", {
 		end
 	end
 })
+
+minetest.register_privilege("ignore_antijoin", "Players with this privilege can ignore anit join when it's enabled")
